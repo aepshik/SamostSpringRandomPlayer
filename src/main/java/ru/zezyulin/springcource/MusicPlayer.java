@@ -1,34 +1,30 @@
 package ru.zezyulin.springcource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
+import java.util.Random;
 
+@Component
 public class MusicPlayer {
-    private List<Music> musicList;
+    private ClassicalMusic classicalMusic;
+    private RockMusic rockMusic;
 
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
+    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic) {
+        this.classicalMusic = classicalMusic;
+        this.rockMusic = rockMusic;
     }
-
-    private int volume;
-    private String name;
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void playMusicList(){
-        for (Music music:musicList){
-            System.out.println("Playing: " + music.getSong());
+    public void playMusic(MusicGenre musicGenre){
+        Random random=new Random();
+        int randomNumber= random.nextInt(3);
+        if (musicGenre==MusicGenre.CLASSICAL){
+            System.out.println(classicalMusic.getSong().get(randomNumber));
+        }
+        else {
+            System.out.println(rockMusic.getSong().get(randomNumber));
         }
     }
 }
